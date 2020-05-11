@@ -26,8 +26,29 @@ class DatabaseHelper{
   print(directory);
   String path = directory.path +"Data/Respirador.db";
   print(path);
-  var dadosDatabase = await openDatabase(path,version:1);
+  var dadosDatabase = await openDatabase(path,version:1, onCreate: _createDb);
   return dadosDatabase;
+  }
+
+ void _createDb(Database db, int newVersion) async{
+   await db.execute("""CREATE TABLE IF NOT EXISTS Dados(
+    timestamp int not null primary key,
+    graph_pressao float not null,
+    fluxo float not null,
+    volume_tidal float not null, 
+    frequencia float not null,
+    oxigenio float not null,
+    pressao_max float not null,
+    peep float not null,
+    tempo_insp float not null,
+    perc_pausa float not null
+    )""");
+ }
+
+  Future insertItems(Dados dados) async{
+    Database db = await this.database;
+    var result = await db.insert("Dados", dados.toMap());
+    print(result);
   }
 
   Future<Dados> getItems(int timestamp) async{
@@ -41,7 +62,13 @@ class DatabaseHelper{
     }
   }
 
-  Future<Dados> deleteItems() async{
+  Future<Dados> deleteItems(int timestamp) async{
+    var db = await this.database;
 
+    int result = await db.delete("Dados",where: "timestamp <= $timestamp");
+  }
+  Future close() async{
+    Database db = await this.database;
+    db.close();
   }
 }

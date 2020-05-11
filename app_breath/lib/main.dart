@@ -1,5 +1,7 @@
+import 'package:app_breath/pages/add_device.dart';
+import 'package:app_breath/pages/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'dashboard.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Dashboard(),
+      home: AddDevice(),
     );
   }
 }
