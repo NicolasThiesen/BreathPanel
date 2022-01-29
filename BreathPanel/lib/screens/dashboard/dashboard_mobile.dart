@@ -1,3 +1,4 @@
+import 'package:app_breath/Widgets/popUpMenu.dart';
 import 'package:app_breath/screens/add_device.dart';
 import 'package:app_breath/screens/dashboard/dashboard_bloc.dart';
 
@@ -25,31 +26,22 @@ class DashboardMobilePortrait extends StatefulWidget {
 
 class _DashboardMobilePortraitState extends State<DashboardMobilePortrait> {
 
-  @override
-  void initState(){
-    super.initState();
-    if(widget.device == null){
-      Navigator.push(context,MaterialPageRoute(builder: (context) => AddDevice()),);
-    }
-    bloc.connectTo(widget.device);
-      }
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.connectTo(null);
-  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
         "BreathPanel",
         style: TextStyle(color: Colors.white,fontSize: 25),
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          DashPopupMenu()
+        ],
         ),
         body: SafeArea(
           child: StreamBuilder(
@@ -169,30 +161,19 @@ class DashboardMobileLandscape extends StatefulWidget {
 class _DashboardMobileLandscapeState extends State<DashboardMobileLandscape> {
 
   @override
-  void initState(){
-    super.initState();
-    if(widget.device == null){
-      Navigator.push(context,MaterialPageRoute(builder: (context) => AddDevice()),);
-    }
-    bloc.connectTo(widget.device);
-      }
-  @override
-  void dispose() {
-    super.dispose();
-    bloc.connectTo(null);
-  }
-
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
         "BreathPanel",
         style: TextStyle(color: Colors.white,fontSize: 25),
         ),
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          DashPopupMenu()
+        ],
         ),
         body: SafeArea(
           child: StreamBuilder(

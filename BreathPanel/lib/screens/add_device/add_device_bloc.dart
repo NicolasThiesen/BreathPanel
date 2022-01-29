@@ -28,17 +28,31 @@ class AddDeviceBloc {
           title: Text("InjeVent",style: TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold),),
           subtitle: Text(device.manufacturerName == null ? "arduino" : device.manufacturerName, style:TextStyle(color: Colors.white,fontSize: 17,fontWeight: FontWeight.bold)),
           trailing: RaisedButton(
+            color: Colors.white,
             child:
-                Text(deviceId == device.deviceId ? "Disconnect" : "Connect",),
+                Text(deviceId == device.deviceId ? "Desconectar" : "Conectar",),
             onPressed: () {
-              main_device=device;
-              status = "Connected";
-              deviceId = device.deviceId;
-              input.add(status);
-              input.add(deviceId);
-              input.add(main_device);
+              if(status == "Idle"){
+                main_device=device;
+                status = "Connected";
+                deviceId = device.deviceId;
+                input.add(status);
+                input.add(deviceId);
+                input.add(main_device);
                 getPorts();
-            },
+            }else{
+                main_device=null;
+                status = "Idle";
+                deviceId = null;
+                input.add(status);
+                input.add(deviceId);
+                input.add(main_device);
+                getPorts();
+            }
+              print(status);
+
+              }
+              
           )));
       input.add(ports);
     });

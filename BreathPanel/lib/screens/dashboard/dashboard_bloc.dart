@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:app_breath/Models/Dados.dart';
+import 'package:app_breath/Widgets/Cards.dart';
 import 'package:app_breath/helpers/database_helper.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:usb_serial/transaction.dart';
 import 'package:usb_serial/usb_serial.dart';
 
@@ -17,6 +19,7 @@ class DashBoardBloc{
   StreamSubscription<String> _subscription;
   Transaction<String> _transaction;
   int _deviceId;
+  String mode; 
 
   List data;
   double last_update =DateTime.now().millisecondsSinceEpoch.toDouble() ;
@@ -46,13 +49,14 @@ class DashBoardBloc{
   Sink get input => _stream.sink;
   Stream get output => _stream.stream;
 
+  List<Widget> cards;
 
   insertDB(timestamp,porc_oxi,pressao_max,pressao,fluxo,porc_pausa,volume_tidal,frequencia,peep,temp_insp) async {
     Dados d = Dados(timestamp,porc_oxi,pressao_max,porc_pausa,volume_tidal,frequencia,peep,temp_insp,pressao,fluxo);
     await db.insertItems(d);
   }
 
-  Future<bool> connectTo(device) async {
+  Future<bool> connectTo(device,context,screen, orientation) async {
     _serialData.clear();
     if (_subscription != null) {
       _subscription.cancel();
@@ -94,7 +98,11 @@ class DashBoardBloc{
     
     _subscription = _transaction.stream.listen((String line) {
         data = line.split(","); 
+        Cards.color = Theme.of(context).primaryColor;
+        cards = Cards().vsv( screen, orientation);
+        input.add(cards);
         try{
+          mode = data[data.length-1];
           porc_oxi = double.parse(data[0]);
           pressao_max = double.parse(data[1]);
           pressao = double.parse(data[2]);

@@ -22,12 +22,12 @@ class DatabaseHelper{
      return _database;
    }
   Future<Database> initializeDatabase() async{
-  Directory directory = await getApplicationDocumentsDirectory();
-  print(directory);
-  String path = directory.path +"Data/Respirador.db";
-  print(path);
-  var dadosDatabase = await openDatabase(path,version:1, onCreate: _createDb);
-  return dadosDatabase;
+    Directory directory = await getApplicationDocumentsDirectory();
+    print(directory);
+    String path = directory.path +"Data/Respirador.db";
+    print(path);
+    var dadosDatabase = await openDatabase(path,version:1, onCreate: _createDb);
+    return dadosDatabase;
   }
 
  void _createDb(Database db, int newVersion) async{

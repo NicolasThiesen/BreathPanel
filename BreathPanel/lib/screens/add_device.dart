@@ -2,7 +2,7 @@ import 'package:app_breath/screens/add_device/add_device_mobile.dart';
 import 'package:app_breath/screens/add_device/add_device_small_phone.dart';
 import 'package:app_breath/screens/add_device/add_device_tablet.dart';
 import 'package:app_breath/ui/orientation.dart';
-import 'package:app_breath/ui/scree_type.layout.dart';
+import 'package:app_breath/ui/screen_type.layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
